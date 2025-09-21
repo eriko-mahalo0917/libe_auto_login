@@ -28,3 +28,42 @@ logger.addHandler(handler)
 
 logger.debug("これはデバッグログです")
 logger.error("ファイルが存在していません")
+
+#復習 呼び出し
+from logging import getLogger, StreamHandler, Formatter, DEBUG
+
+# --- ★★★ここからが色付け機能を追加する部分★★★ ---
+class ColoredFormatter(Formatter):
+    """ログレベルに応じて色を付けるためのカスタムFormatter"""
+    COLORS = {
+        'WARNING':  '\033[33m',  # 黄色
+        'INFO':     '\033[32m',  # 緑色
+        'DEBUG':    '\033[36m',  # 水色
+        'ERROR':    '\033[31m',  # 赤色
+        'RESET':    '\033[0m'    # 色をリセット
+    }
+
+    def format(self, record):
+        # ログメッセージに色を付ける
+        log_message = super().format(record)
+        return f"{self.COLORS.get(record.levelname, self.COLORS['RESET'])}{log_message}{self.COLORS['RESET']}"
+# --- ★★★ここまで★★★
+
+
+#フォーマットどんな風呼び出すか？決まったclassを呼び出す レベル名前と時間とメッセージとファイル名
+formatter = ColoredFormatter('[%(levelname)s] %(asctime)s - %(message)s (%(filename)s)')
+#記録係の特殊な変数で呼び出す
+logger = getLogger(__name__)
+#ログの出力先を決める
+handler = StreamHandler()
+#handlerのレベルを決める
+handler.setFormatter(formatter)
+#
+handler.setLevel(DEBUG)
+logger.setLevel(DEBUG)
+logger.addHandler(handler)
+
+logger.debug("これはデバッグのログです")
+logger.info("プログラムが開始しました")
+logger.error("ファイルは存在しません")
+logger.warning("ファイルが容量を超えました")
