@@ -60,13 +60,56 @@ class GetElement:
         #ライブラリから持ってきて使っていて、変数へ入れ込んでいる
         self.driver = driver
         
+        
     #=====IDで要素を取得する機能==========
     def get_id_element(self):
         #tryの外側にinfoをおいたのは宣言自体はエラーにならないから
         self.logger.info(f"IDで要素を取得します")
-        
+        #driver.find_elementはライブラリにあるメソッド
         try:
-            return self.driver.find_element(By.ID, "username")
+            #IDを探して取得する
+            id_element = self.driver.find_element(By.ID, "username")
+            self.logger.info(f"ID='username'の取得に成功しました")
+            return id_element
+        
+        #起動できなかったらこれをする
         except Exception as e:
-            self.logger.error(f"ID=username要素の取得に失敗しました")
+            self.logger.error(f"ID='username'要素の取得に失敗しました")
+            self.logger.error(f"エラーの内容：{e}")
+            #処理停止
             raise
+        
+             
+    #======NAMEを取得する機能============
+    def get_pass_element(self):
+        #ログを出力
+        self.logger.info(f"NAMEで’password’要素を取得します")
+        try:
+            pass_element = self.driver.find_element(By.NAME, "password")
+            self.logger.info(f"NAME='password'要素の取得に成功しました")
+            return pass_element
+        
+        #起動できなかったらこれをする
+        except Exception as e:
+            self.logger.error(f"NAME='password'要素の取得に失敗しました")
+            self.logger.error(f"エラーの内容：{e}")
+            #処理停止
+            raise
+        
+        
+    #=======XPATHを取得する機能=========
+    def get_check_box_element(self):
+        self.logger.info(f"XPATHでチェックボックス要素を取得します")
+        try:
+            #このパスはパスワードじゃないよ！//input「ページ上にある、チャックボックスを探して
+            #ログインを維持するチェックボックスとか、次回からID笑楽のチェックボックスとか
+            check_box_element = self.driver.find_element(By.XPATH, "//input[@type='checkbox']") 
+            self.logger.info(f"チェックボックス要素を取得しました")
+            return check_box_element
+        
+        #起動できなかったらこれをする
+        except Exception as e:
+            self.logger.error(f"チェックボックス要素の取得に失敗しました")
+            self.logger.error(f"エラーの内容：{e}")
+        #処理停止
+        raise
