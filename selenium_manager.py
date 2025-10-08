@@ -97,7 +97,7 @@ class GetElement:
             raise
         
         
-    #=======XPATHを取得する機能=========
+    #=======XPATHを取得する機能============
     def get_check_box_element(self):
         self.logger.info(f"XPATHでチェックボックス要素を取得します")
         try:
@@ -111,5 +111,24 @@ class GetElement:
         except Exception as e:
             self.logger.error(f"チェックボックス要素の取得に失敗しました")
             self.logger.error(f"エラーの内容：{e}")
-        #処理停止
-        raise
+            #処理停止
+            raise
+        
+        
+    
+    #=======ログインボタンを見つける機能==========
+    def get_login_btn_element(self):
+        #ログを出力する
+        self.logger.info(f"IDで'login-button'要素を取得します")
+        try:
+            #IDのログインボタンを探してほしいってお願いしている
+            login__btn_element = self.driver.find_element(By.ID, 'login-button')
+            #ログを出力する
+            self.logger.info(f"ID='login-button'要素の取得に成功しました")
+            return login__btn_element
+        #失敗した場合はこれをする
+        except Exception as e:
+            self.logger.error(f"ID='login-button'要素の取得に失敗しました")
+            #処理停止
+            raise
+        
