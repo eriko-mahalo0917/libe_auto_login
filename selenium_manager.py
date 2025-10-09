@@ -132,3 +132,34 @@ class GetElement:
             #処理停止
             raise
         
+
+#＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝     
+
+from selenium.webdriver.remote.webelement import WebElement
+
+
+#クラスを作成する
+class ActionElement:
+    #初期設定でログを設定
+    def __init__(self):
+        #中身はさっきと一緒だけど名前を変えた方が分かりやすいから変更
+        self.getLogger_action = SimpleLogger()
+        self.logger = self.getLogger_action.get_logger()
+        
+    
+    # 入力・クリック操作が定する WebElement = 型ヒント str = 型ヒントで文字列にする
+    #elementは対象の部品、ID入力欄とか
+    #textは入力したい文字で、userIDとか
+    def input_text(self, element: WebElement, text: str):
+        self.logger.info(f"テキスト'{text}'を入力します")
+    
+        try:
+            #文字を打ち込みしてと命令
+            element.send_keys(text)
+            self.logger.info(f"テキストの入力に成功しました")
+        except Exception as e:
+            #失敗したらこれをしてほしい
+            self.logger.error(f"文字の入力に失敗しました")
+            self.logger.error(f"エラーの内容：{e}")
+        #処理停止
+        raise
