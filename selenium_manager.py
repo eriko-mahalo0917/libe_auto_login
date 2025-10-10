@@ -163,3 +163,17 @@ class ActionElement:
             self.logger.error(f"エラーの内容：{e}")
         #処理停止
         raise
+    
+    
+    def click_element(self, element: WebElement):
+        #ログを出す
+        self.logger.info(f"要素をクリックします")
+        try:
+            #クリックするよとメソッドを呼んでいる
+            element.click()
+            self.logger.info(f"要素のクリックに成功しました")
+        except Exception as e:
+            #失敗したらの処理
+            self.logger.error(f"要素のクリックに失敗しました")
+            self.logger.error(f"エラーの内容：{e}")
+        raise
