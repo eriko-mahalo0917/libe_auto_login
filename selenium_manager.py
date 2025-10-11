@@ -10,7 +10,7 @@ class ChromeDriverManager:
     def __init__(self):
         self.getLogger = SimpleLogger()
         self.logger = self.getLogger.get_logger()
-        self.driver = self.chrome_process() #最後にここにって難しい
+        
         
     #①設定するためのオプションを設定
     def get_chrome_options(self):
@@ -37,9 +37,7 @@ class ChromeDriverManager:
         #起動できなかった場合はこれをする
         except Exception as e:
             #エラーのログを出す
-            self.logger.error(f"ドライバーの起動に失敗しました")
-            #失敗したerror内容をここで出す
-            self.logger.error(f"エラーの内容：{e}")
+            self.logger.error(f"ドライバーの起動に失敗しました\nエラーの内容：{e}")
             #処理を停止
             raise
         
@@ -74,8 +72,7 @@ class GetElement:
         
         #起動できなかったらこれをする
         except Exception as e:
-            self.logger.error(f"ID='username'要素の取得に失敗しました")
-            self.logger.error(f"エラーの内容：{e}")
+            self.logger.error(f"ID='username'要素の取得に失敗しました\nエラーの内容：{e}")
             #処理停止
             raise
         
@@ -91,8 +88,7 @@ class GetElement:
         
         #起動できなかったらこれをする
         except Exception as e:
-            self.logger.error(f"NAME='password'要素の取得に失敗しました")
-            self.logger.error(f"エラーの内容：{e}")
+            self.logger.error(f"NAME='password'要素の取得に失敗しました\nエラーの内容：{e}")
             #処理停止
             raise
         
@@ -109,8 +105,7 @@ class GetElement:
         
         #起動できなかったらこれをする
         except Exception as e:
-            self.logger.error(f"チェックボックス要素の取得に失敗しました")
-            self.logger.error(f"エラーの内容：{e}")
+            self.logger.error(f"チェックボックス要素の取得に失敗しました\nエラーの内容：{e}")
             #処理停止
             raise
         
@@ -159,8 +154,7 @@ class ActionElement:
             self.logger.info(f"テキストの入力に成功しました")
         except Exception as e:
             #失敗したらこれをしてほしい
-            self.logger.error(f"文字の入力に失敗しました")
-            self.logger.error(f"エラーの内容：{e}")
+            self.logger.error(f"文字の入力に失敗しました\nエラーの内容：{e}")
             #処理停止
             raise
     
@@ -174,6 +168,8 @@ class ActionElement:
             self.logger.info(f"要素のクリックに成功しました")
         except Exception as e:
             #失敗したらの処理
-            self.logger.error(f"要素のクリックに失敗しました")
-            self.logger.error(f"エラーの内容：{e}")
+            self.logger.error(f"要素のクリックに失敗しました\nエラーの内容：{e}")
             raise
+        
+        
+        
