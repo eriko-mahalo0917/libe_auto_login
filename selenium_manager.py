@@ -3,44 +3,51 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from logger import SimpleLogger
+from chrome import ChromeManager
 
 #クラスを作成する
 class ChromeDriverManager:
     #初期設定
     def __init__(self):
-        self.getLogger = SimpleLogger()
-        self.logger = self.getLogger.get_logger()
+        self.chrome_manager = ChromeManager()
         
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#ここはコンストラクタで呼び出してChromeManagerを利用するからいらなくなった場所！！
         
     #①設定するためのオプションを設定
-    def get_chrome_options(self):
+    #def get_chrome_options(self):
         #インスタンスを作成する
-        chrome_options = Options()
+        #chrome_options = Options()
         #ウィンドウのサイズのみだから
-        chrome_options.add_argument("--window-size=1000,1000")
-        return chrome_options
-        
+        #chrome_options.add_argument("--window-size=1000,1000")
+        #return chrome_options
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    
     #②ドライバーを生成する　ブラウザを立ち上げるみたいな？
     def chrome_process(self):
         service = Service()
         
-        #①の作成したのをここで受け取る
-        chrome_options = self.get_chrome_options()
+        #コンストラクタで呼んだchromeManagerを利用する
+        #これは設定機能が入ったメソッドを呼び出している
+        driver = self.chrome_manager.start_chrome()
+        return driver
         
+        
+#~~~~~~~~~~~~~~~~Chrome.pyのstart_chromeメソッドにtryとexceptが入っているからいらなくなった~~
         #エラー時はraiseで処理を停止します
-        try:
-            self.logger.info(f"ドライバーの起動をします")
-            chrome = webdriver.Chrome(service=service ,options=chrome_options)
-            self.logger.info(f"ドライバーが起動しました")
+        #try:
+            #self.logger.info(f"ドライバーの起動をします")
+            #chrome = webdriver.Chrome(service=service ,options=chrome_options)
+            #self.logger.info(f"ドライバーが起動しました")
             #この設置した設定をここで受け取ります
-            return chrome
+            #return chrome
         #起動できなかった場合はこれをする
-        except Exception as e:
+        #except Exception as e:
             #エラーのログを出す
-            self.logger.error(f"ドライバーの起動に失敗しました\nエラーの内容：{e}")
+            #self.logger.error(f"ドライバーの起動に失敗しました\nエラーの内容：{e}")
             #処理を停止
-            raise
-        
+            #raise
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~        
 
 #＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 #--- ② ページの部品（IDやパスワードの入力欄など）を見つけるクラスを作る ---
