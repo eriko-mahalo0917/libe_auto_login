@@ -161,8 +161,8 @@ class ActionElement:
             #失敗したらこれをしてほしい
             self.logger.error(f"文字の入力に失敗しました")
             self.logger.error(f"エラーの内容：{e}")
-        #処理停止
-        raise
+            #処理停止
+            raise
     
     
     def click_element(self, element: WebElement):
@@ -176,4 +176,4 @@ class ActionElement:
             #失敗したらの処理
             self.logger.error(f"要素のクリックに失敗しました")
             self.logger.error(f"エラーの内容：{e}")
-        raise
+            raise
