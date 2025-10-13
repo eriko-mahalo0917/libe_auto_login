@@ -1,0 +1,28 @@
+2025-10-13 23:00:21,886 - INFO - これからブラウザを起動します
+2025-10-13 23:00:27,373 - INFO - ブラウザを起動できました
+2025-10-13 23:00:27,373 - INFO - これからサイトを立ち上げます
+2025-10-13 23:00:29,424 - INFO - サイトを立ち上げました:https://www.yahoo.co.jp
+2025-10-13 23:00:29,427 - INFO - これからブラウザを起動します
+2025-10-13 23:00:30,602 - INFO - ブラウザを起動できました
+2025-10-13 23:00:32,999 - INFO - IDで要素を取得します
+2025-10-13 23:00:33,008 - ERROR - ID='username'要素の取得に失敗しました
+エラーの内容：Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="username"]"}
+  (Session info: chrome=141.0.7390.66); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+Stacktrace:
+0   chromedriver                        0x0000000102e0f5f0 cxxbridge1$str$ptr + 2894960
+1   chromedriver                        0x0000000102e0752c cxxbridge1$str$ptr + 2861996
+2   chromedriver                        0x000000010292d5ec _RNvCs47EqcsrPRmA_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 74324
+3   chromedriver                        0x0000000102974fb4 _RNvCs47EqcsrPRmA_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 367644
+4   chromedriver                        0x00000001029b6458 _RNvCs47EqcsrPRmA_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 635072
+5   chromedriver                        0x0000000102969178 _RNvCs47EqcsrPRmA_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 318944
+6   chromedriver                        0x0000000102dd333c cxxbridge1$str$ptr + 2648508
+7   chromedriver                        0x0000000102dd6918 cxxbridge1$str$ptr + 2662296
+8   chromedriver                        0x0000000102db3dbc cxxbridge1$str$ptr + 2520124
+9   chromedriver                        0x0000000102dd7200 cxxbridge1$str$ptr + 2664576
+10  chromedriver                        0x0000000102da552c cxxbridge1$str$ptr + 2460588
+11  chromedriver                        0x0000000102df6bec cxxbridge1$str$ptr + 2794092
+12  chromedriver                        0x0000000102df6d70 cxxbridge1$str$ptr + 2794480
+13  chromedriver                        0x0000000102e07178 cxxbridge1$str$ptr + 2861048
+14  libsystem_pthread.dylib             0x00000001934ddf94 _pthread_start + 136
+15  libsystem_pthread.dylib             0x00000001934d8d34 thread_start + 8
+
