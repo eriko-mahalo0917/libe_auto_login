@@ -10,25 +10,26 @@ from logger import SimpleLogger
 class ChromeManager:
     #コンストラクタで初期設定　ログの部分
     def __init__(self):
-        #loggerの準備をする
+        #SimpleLoggerの設計図から新しい記録係（インスタンス）を一体作り、それを自分自身のgetLoggerという名前の部品として体に装備せよ！
         self.getLogger = SimpleLogger()
+        #ここの理解が難しいなー
         self.logger = self.getLogger.get_logger()
         
     #①ブラウザの設定を決める
-    def get_chrome_options(self):
+    def get_chrome_options(self ,window_size = "1000,1000"):
         #ライブラリにあるものでインスタンスを作成
         chrome_options = Options()
         #ウィンドウサイズ
-        chrome_options.add_argument("--window-size=840,600")
+        chrome_options.add_argument(f"--window-size={window_size}")
         #ポジションの場所
         chrome_options.add_argument("--window-position=0,0")
         return chrome_options
     
     #②ブラウザを起動する機能
-    def start_chrome(self):
+    def start_chrome(self,window_size ="1000,1000"):
         service = Service()
         #①で作成したものよ呼び出し、変数へ代入　自分自身の機能を呼び出すからself　※インストラクタじゃない
-        chrome_options =  self.get_chrome_options()
+        chrome_options =  self.get_chrome_options(window_size=window_size)
         
         try:
             self.logger.info(f"これからブラウザを起動します")
