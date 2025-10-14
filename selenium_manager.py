@@ -24,12 +24,12 @@ class ChromeDriverManager:
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     
     #②ドライバーを生成する　ブラウザを立ち上げるみたいな？
-    def chrome_process(self):
+    def chrome_process(self,window_size="1000,1000"):
         service = Service()
         
         #コンストラクタで呼んだchromeManagerを利用する
         #これは設定機能が入ったメソッドを呼び出している
-        driver = self.chrome_manager.start_chrome()
+        driver = self.chrome_manager.start_chrome(window_size=window_size)
         return driver
         
         
