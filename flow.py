@@ -44,9 +44,10 @@ class AutoLoginFlow:
                 id_text = os.getenv("ID")
                 id_box = self.get_element.get_id_element(id_locator)
                 self.action_element.input_text(id_box, id_text)
+            
+            
                 
-                
-
+            
                 
                 
     #別定義---------------------------------------------------------------
