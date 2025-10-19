@@ -75,9 +75,9 @@ class GetElement:
         #driver.find_elementはライブラリにあるメソッド
         try:
             #探して取得する
-            element = self.driver.find_element(By.ID, id_locator)
+            id_element = self.driver.find_element(By.ID, id_locator)
             self.logger.info(f"ID='{id_locator}'の取得に成功しました")
-            return element
+            return id_element
         
         #起動できなかったらこれをする
         except Exception as e:
@@ -105,7 +105,7 @@ class GetElement:
         
     #=======XPATHを取得する機能============
     #(xpath_locator: str)
-    def find_xpath_element(self, xpath_locator: str):
+    def get_xpath_element(self, xpath_locator: str):
         self.logger.info(f"XPATH='{xpath_locator}'で要素を取得します")
         try:
             #このパスはパスワードじゃないよ！//input「ページ上にある、チャックボックスを探して
@@ -181,6 +181,3 @@ class ActionElement:
             #失敗したらの処理
             self.logger.error(f"要素のクリックに失敗しました\nエラーの内容：{e}")
             raise
-        
-        
-        
