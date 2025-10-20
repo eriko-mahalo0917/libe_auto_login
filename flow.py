@@ -1,26 +1,24 @@
 ####クラスとは再利用可能＆拡張性があること！忘れることのないように！#################
-
-# 環境変数！このファイルの外側、PC自体に保存してあるデータを呼び出せる仕組み
+#os.getenvを利用するために！PC内の保存データを持ってくる
 import os
-#selenium_managerからクラスをインポート
-from selenium_manager import ChromeDriverManager, GetElement, ActionElement
-#loggerをインポート
 from logger import SimpleLogger
+from selenium_manager import ChromeDriverManager, GetElement, ActionElement
 
 
 ##########################################################################
-
+#classを作成する
 class AutoLoginFlow:
-    #初期設置
+    #初期設定
     def __init__(self):
-        #logger　ログの設定
-        self.getLogger_set_up = SimpleLogger()
-        self.logger = self.getLogger_set_up.get_logger()
+        
+        #loggerを呼び出してログを利用できるようにする
+        self.get_logger_setup = SimpleLogger()
+        self.logger = self.get_logger_setup.get_logger()
         
         
-        #🚀chromeの起動をここで行う
-        self.driver_manager = ChromeDriverManager()
-        self.chrome = self.driver_manager.chrome_process() #メソッド
+        #chromeを起動をここで行う
+        self.chrome_manager = ChromeDriverManager()
+        self.chrome = self.chrome_manager.chrome_process() #メソッド
         
         
         #インスタンスを作成する
@@ -29,30 +27,18 @@ class AutoLoginFlow:
         self.action_element = ActionElement()
         
         
-        
-#########################################################################
-    def process(self, url: str, id_locator: str, pass_locator: str,login_btn_locator: str):
-    #3回まで繰り返して（０，１，２の３回繰り返す）
-        count = 0
-        while count < 3:
-            try:
-                #1つ目のフロー
-                #ログインサイトを開く
-                self.open_site(url) #別定義のところ
-                #2つ目のフロー
-                #IDを入力
-                id_text = os.getenv("ID")
-                id_box = self.get_element.get_id_element(id_locator)
-                self.action_element.input_text(id_box, id_text)
-            
-            
-                
-            
-                
-                
-    #別定義---------------------------------------------------------------
-    #ここはchrome.pyのopen_siteではダメなのか？initでchromを開いているから？ ん？    
-    def open_site(self, url :str):
-        self.logger.info(f"ログインサイトを開きます:{url}")
+##########################################################################
+    def process(self, url: str, id_locator: str, pass_locator: str, login_btn_locator: str):
+        #１つ目のフロー
+        #サイトを開く
         self.chrome.get(url)
-        self.logger.info(f"ログインサイトを開きました")
+        
+        #2つ目のフロー
+        #IDを入力する　※環境変数という特別な場所からIDという名前を探してきて
+        id_text = os.getenv("ID")
+        #IDを探して持ってきて
+        id_element = self.get_element.get_id_element(id_locator)
+        #IDを入力して打ち込んで
+        self.action_element.input_text(id_element,id_text)
+        
+        
