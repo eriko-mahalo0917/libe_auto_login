@@ -160,6 +160,8 @@ class ActionElement:
         self.logger.info(f"テキスト'{text}'を入力します")
     
         try:
+            #既に入っている文字を消す
+            element.clear()
             #文字を打ち込みしてと命令
             element.send_keys(text)
             self.logger.info(f"テキストの入力に成功しました")
