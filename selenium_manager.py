@@ -1,185 +1,121 @@
-#インポート
+#インポート####################################################################
+
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
-#WebDriverという「型」を教えるために、インポートを一つ追加　型ヒント
 from selenium.webdriver.remote.webdriver import WebDriver
-#これをインポートするをIDとか名前とか探せる
 from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webelement import WebElement
+
+#loggerとchromeをインポート
 from logger import SimpleLogger
 from chrome import ChromeManager
 
-#クラスを作成する
+#############################################################################
+
+#1つ目のフロー：ブラウザを立ち上げる
+#ChromeManagerのインスタンスを呼ぶ
 class ChromeDriverManager:
-    #初期設定
     def __init__(self):
         self.chrome_manager = ChromeManager()
-        
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#ここはコンストラクタで呼び出してChromeManagerを利用するからいらなくなった場所！！
-        
-    #①設定するためのオプションを設定
-    #def get_chrome_options(self):
-        #インスタンスを作成する
-        #chrome_options = Options()
-        #ウィンドウのサイズのみだから
-        #chrome_options.add_argument("--window-size=1000,1000")
-        #return chrome_options
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     
-    #②ドライバーを生成する　ブラウザを立ち上げるみたいな？
-    def chrome_process(self,window_size="1000,1000"):
+    #デフォルトは1000，1000だけど、自由に設定できるようにする
+    def chrome_process(self, window_size = "1000,1000"):
         service = Service()
-        
-        #コンストラクタで呼んだchromeManagerを利用する
-        #これは設定機能が入ったメソッドを呼び出している
         driver = self.chrome_manager.start_chrome(window_size=window_size)
         return driver
-        
-        
-#~~~~~~~~~~~~~~~~Chrome.pyのstart_chromeメソッドにtryとexceptが入っているからいらなくなった~~
-        #エラー時はraiseで処理を停止します
-        #try:
-            #self.logger.info(f"ドライバーの起動をします")
-            #chrome = webdriver.Chrome(service=service ,options=chrome_options)
-            #self.logger.info(f"ドライバーが起動しました")
-            #この設置した設定をここで受け取ります
-            #return chrome
-        #起動できなかった場合はこれをする
-        #except Exception as e:
-            #エラーのログを出す
-            #self.logger.error(f"ドライバーの起動に失敗しました\nエラーの内容：{e}")
-            #処理を停止
-            #raise
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~        
+    
+    
 
-#＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
-#--- ② ページの部品（IDやパスワードの入力欄など）を見つけるクラスを作る ---
-
-
+#２つ目のフロー
+#ID、パスワードを取得
 class GetElement:
-    #初期設定をする　これも共通でログを設定
-    def __init__(self,driver:WebDriver):
-        #中身はさっきと一緒だけど名前を変えた方が分かりやすいから変更
+    #探すためのdriverが必要だから、引数にいる
+    def __init__(self, driver: WebDriver):
         self.getLogger_set_up = SimpleLogger()
         self.logger = self.getLogger_set_up.get_logger()
-        #ライブラリから持ってきて使っていて、変数へ入れ込んでいる
         self.driver = driver
         
-        
-    #=====IDで要素を取得する機能==========
-    #id_locator: str: 「探してほしいIDの名前（文字列=str）」を受け取るための「箱（引数）」
+    #ID取得
     def get_id_element(self, id_locator: str):
-        #tryの外側にinfoをおいたのは宣言自体はエラーにならないから
-        self.logger.info(f"ID='{id_locator}'で要素を取得します")
-        #driver.find_elementはライブラリにあるメソッド
+        self.logger.info(f"ID='{id_locator}' で要素を取得します")
         try:
-            #探して取得する
             id_element = self.driver.find_element(By.ID, id_locator)
-            self.logger.info(f"ID='{id_locator}'の取得に成功しました")
+            self.logger.info(f"ID='{id_locator}' の取得に成功しました")
             return id_element
-        
-        #起動できなかったらこれをする
         except Exception as e:
-            self.logger.error(f"ID='{id_locator}'要素の取得に失敗しました\nエラーの内容：{e}")
+            self.logger.error(f"ID='{id_locator}' 要素の取得に失敗しました\nエラー内容: {e}")
             #処理停止
             raise
         
-             
-    #======NAMEを取得する機能============
-    #(name_locator: str)
-    def get_pass_element(self, name_locator: str):
-        #ログを出力
-        self.logger.info(f"NAME=’{name_locator}’要素を取得します")
+    #パスワード取得
+    def get_pass_element(self, pass_locator: str):
+        self.logger.info(f"PASS='{pass_locator}'の取得します")
         try:
-            name_element = self.driver.find_element(By.NAME, name_locator)
-            self.logger.info(f"NAME='{name_locator}'要素の取得に成功しました")
-            return name_element
-        
-        #起動できなかったらこれをする
+            pass_element = self.driver.find_element(By.ID, pass_locator)
+            self.logger.info(f"PASS='{pass_locator}'の取得に成功しました")
+            return pass_element
         except Exception as e:
-            self.logger.error(f"NAME='{name_locator}'要素の取得に失敗しました\nエラーの内容：{e}")
+            self.logger.error(f"PASS='{pass_locator}'の要素の取得に失敗しました\nエラー内容：{e}")
             #処理停止
             raise
         
         
-    #=======XPATHを取得する機能============
-    #(xpath_locator: str)
-    def get_xpath_element(self, xpath_locator: str):
-        self.logger.info(f"XPATH='{xpath_locator}'で要素を取得します")
+    #チェックボックス探す
+    def get_check_box_element(self, check_locator: str):
+        self.logger.info(f"チェックボックス=’{check_locator}’の要素を取得します")
         try:
-            #このパスはパスワードじゃないよ！//input「ページ上にある、チャックボックスを探して
-            #ログインを維持するチェックボックスとか、次回からID笑楽のチェックボックスとか
-            xpath_element = self.driver.find_element(By.XPATH, xpath_locator) 
-            self.logger.info(f"XPATH='{xpath_locator}' チェックボックス要素を取得しました")
-            return xpath_element
-        
-        #起動できなかったらこれをする
+            check_element = self.driver.find_element(By.ID, check_locator)
+            self.logger.info(f"チェックボックス='{check_locator}' の取得に成功しました")
+            return check_element
         except Exception as e:
-            self.logger.error(f"XPATH= '{xpath_locator}'チェックボックス要素の取得に失敗しました\nエラーの内容：{e}")
+            self.logger.error(f"チェックボックス='{check_locator}' 要素の取得に失敗しました\nエラー内容: {e}")
+            #処理停止
+            raise
+        
+    #ログインボタン探す
+    def get_login_btn_element(self, btn_locator: str):
+        self.logger.info(f"ログインボタン='{btn_locator}' で要素を取得します")
+        try:
+            btn_element = self.driver.find_element(By.ID, btn_locator)
+            self.logger.info(f"ログインボタン='{btn_locator}' の取得に成功しました")
+            return btn_element
+        except Exception as e:
+            self.logger.error(f"ログインボタン='{btn_locator}' の取得に失敗しました。\nエラー内容{e}")
             #処理停止
             raise
         
         
-    
-    #=======ログインボタンを見つける機能==========
-    #def get_login_btn_element(self):
-        #ログを出力する
-        #self.logger.info(f"IDで'login-button'要素を取得します")
-        #try:
-            #IDのログインボタンを探してほしいってお願いしている
-            #login__btn_element = self.driver.find_element(By.ID, 'login-button')
-            #ログを出力する
-            #self.logger.info(f"ID='login-button'要素の取得に成功しました")
-            #return login__btn_element
-        #失敗した場合はこれをする
-        #except Exception as e:
-            #self.logger.error(f"ID='login-button'要素の取得に失敗しました")
-            #処理停止
-            #raise
-        
-
-#＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝     
-
-from selenium.webdriver.remote.webelement import WebElement
-
-
-#クラスを作成する
-class ActionElement:
-    #初期設定でログを設定
+            
+#３つ目のフロー
+#操作してログインボタンをクリック
+class ElementAction:
     def __init__(self):
-        #中身はさっきと一緒だけど名前を変えた方が分かりやすいから変更
-        self.getLogger_action = SimpleLogger()
-        self.logger = self.getLogger_action.get_logger()
+        self.getLogger_set_up = SimpleLogger()
+        self.logger = self.getLogger_set_up.get_logger()
         
-    
-    # 入力・クリック操作が定する WebElement = 型ヒント str = 型ヒントで文字列にする
-    #elementは対象の部品、ID入力欄とか
-    #textは入力したい文字で、userIDとか
-    def input_text(self, element: WebElement, text: str):
-        self.logger.info(f"テキスト'{text}'を入力します")
-    
+        
+    #クリアしてから入力する
+    def click_clear_input(self, element, text):
+        self.logger.info(f"テキストを入力します。")
         try:
-            #既に入っている文字を消す
+            #一旦、クリアする
             element.clear()
-            #文字を打ち込みしてと命令
+            #テキスト入力
             element.send_keys(text)
-            self.logger.info(f"テキストの入力に成功しました")
+            self.logger.info(f"テキスト入力に成功しました")
         except Exception as e:
-            #失敗したらこれをしてほしい
-            self.logger.error(f"文字の入力に失敗しました\nエラーの内容：{e}")
+            self.logger.error(f"テキスト入力に失敗しました。\nエラー内容{e}")
             #処理停止
             raise
-    
-    
-    def click_element(self, element: WebElement):
-        #ログを出す
+        
+    #クリックする　「探す」必要がないので、driverは引数にいらない
+    def click_element(self, element):
         self.logger.info(f"要素をクリックします")
         try:
-            #クリックするよとメソッドを呼んでいる
             element.click()
-            self.logger.info(f"要素のクリックに成功しました")
+            self.logger.info(f"クリックに成功しました")
         except Exception as e:
-            #失敗したらの処理
-            self.logger.error(f"要素のクリックに失敗しました\nエラーの内容：{e}")
+            self.logger.error(f"クリックに失敗しました。\nエラー内容{e}")
+            #処理停止
             raise
