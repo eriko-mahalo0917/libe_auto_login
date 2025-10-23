@@ -74,14 +74,14 @@ class GetElement:
             raise
         
     #ログインボタン探す
-    def get_login_btn_element(self, btn_locator: str):
-        self.logger.info(f"ログインボタン='{btn_locator}' で要素を取得します")
+    def get_login_btn_element(self, login_btn_locator: str):
+        self.logger.info(f"ログインボタン='{login_btn_locator}' で要素を取得します")
         try:
-            btn_element = self.driver.find_element(By.ID, btn_locator)
-            self.logger.info(f"ログインボタン='{btn_locator}' の取得に成功しました")
+            btn_element = self.driver.find_element(By.ID, login_btn_locator)
+            self.logger.info(f"ログインボタン='{login_btn_locator}' の取得に成功しました")
             return btn_element
         except Exception as e:
-            self.logger.error(f"ログインボタン='{btn_locator}' の取得に失敗しました。\nエラー内容{e}")
+            self.logger.error(f"ログインボタン='{login_btn_locator}' の取得に失敗しました。\nエラー内容{e}")
             #処理停止
             raise
         
