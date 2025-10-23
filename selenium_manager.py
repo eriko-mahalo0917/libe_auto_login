@@ -99,6 +99,8 @@ class ElementAction:
     def click_clear_input(self, element, text):
         self.logger.info(f"テキストを入力します。")
         try:
+            #クリックをして入力できるようにする
+            element.click()
             #一旦、クリアする
             element.clear()
             #テキスト入力
