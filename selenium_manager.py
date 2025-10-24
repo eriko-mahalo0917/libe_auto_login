@@ -88,36 +88,45 @@ class GetElement:
         
             
 #３つ目のフロー
-#操作してログインボタンをクリック
-class ElementAction:
-    def __init__(self):
+#操作してログインボタンをクリック＋自分で見つける
+class ActionElement:
+    def __init__(self,driver: WebDriver):
         self.getLogger_set_up = SimpleLogger()
         self.logger = self.getLogger_set_up.get_logger()
+        self.driver = driver
         
         
     #クリアしてから入力する
-    def click_clear_input(self, element, text):
-        self.logger.info(f"テキストを入力します。")
+    def click_clear_input(self, locator: str,input_text: str):
+        self.logger.info(f"{locator}にテキストを入力します。")
+        #空っぽの箱を用意
+        element = None
+        
         try:
+            element = self.driver.find_element(By.ID, locator)
             #クリックをして入力できるようにする
             element.click()
             #一旦、クリアする
             element.clear()
             #テキスト入力
-            element.send_keys(text)
+            element.send_keys(input_text)
             self.logger.info(f"テキスト入力に成功しました")
         except Exception as e:
             self.logger.error(f"テキスト入力に失敗しました。\nエラー内容{e}")
             #処理停止
             raise
         
-    #クリックする　「探す」必要がないので、driverは引数にいらない
-    def click_element(self, element):
-        self.logger.info(f"要素をクリックします")
+    #クリックする
+    def click_element(self, locator: str):
+        self.logger.info(f"{locator}の要素をクリックします")
+        #空っぽの箱を用意
+        element = None
+        
         try:
+            element = self.driver.find_element(By.ID, locator)
             element.click()
             self.logger.info(f"クリックに成功しました")
         except Exception as e:
-            self.logger.error(f"クリックに失敗しました。\nエラー内容{e}")
+            self.logger.error(f"ID='{locator}' のクリックまたは要素検索に失敗しました。\nエラー: {e}")
             #処理停止
             raise
