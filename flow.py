@@ -1,10 +1,12 @@
 ####クラスとは再利用可能＆拡張性があること！忘れることのないように！#################
 #os.getenvを利用するために！PC内の保存データを持ってくる
 import os
+from dotenv import load_dotenv
 from logger import SimpleLogger
-from selenium_manager import ChromeDriverManager, GetElement, ElementAction
+from selenium_manager import ChromeDriverManager, GetElement, ActionElement
 
 
+load_dotenv()
 ##########################################################################
 #classを作成する
 class AutoLoginFlow:
@@ -21,7 +23,7 @@ class AutoLoginFlow:
         
         #インスタンスを作成 GetElement&ElementAction
         self.get_element = GetElement(driver = self.chrome)
-        self.action_element = ElementAction()
+        self.action_element = ActionElement(get_element_instance=self.get_element)
         
         
 #=====================================================================
@@ -34,23 +36,22 @@ class AutoLoginFlow:
         #2つ目のフロー
         #IDを入力する →　envファイルの"ID" という名前のデータを取り出してid_textへ代入
         id_text = os.getenv("ID")
-        id_element = self.get_element.get_id_element(id_locator)
-        self.action_element.click_clear_input(element=id_element, text = id_text)
+        #ActionElementを呼び出す
+        self.action_element.click_clear_input(locator=id_locator, input_text=id_text)
         
         
         #３つ目のフロー
         #パスワードの入力
         pass_text = os.getenv("PASS")
-        pass_element = self.get_element.get_pass_element(pass_locator)
         self.logger.info(f"パスワードを入力します：{pass_text}")
-        self.action_element.click_clear_input(element=pass_element,text = pass_text)
+        self.action_element.click_clear_input(locator=pass_locator, input_text=pass_text)
         
         
         #４つ目のフロー
         #ログインボタンをクリック
         #ログインできているか確認
-        login_btn_element = self.get_element.get_login_btn_element(login_btn_locator)
-        self.action_element.click_element(element=login_btn_element)
+        self.action_element.click_element(locator=login_btn_locator)
         self.logger.info(f"ログインに成功しました")
         
         #終了
+        self.chrome.quit()
