@@ -88,22 +88,22 @@ class GetElement:
         
             
 #３つ目のフロー
-#操作してログインボタンをクリック＋自分で見つける
+#操作してログインボタンをクリック＋自分で見つける　※※ここでGetElementを呼び出して使う※※
 class ActionElement:
-    def __init__(self,driver: WebDriver):
+    def __init__(self,get_element_instance: GetElement):
         self.getLogger_set_up = SimpleLogger()
         self.logger = self.getLogger_set_up.get_logger()
-        self.driver = driver
+        self.get_element = get_element_instance
         
         
-    #クリアしてから入力する
+    #クリアしてから入力する 
     def click_clear_input(self, locator: str,input_text: str):
+        #GetElementを利用してクリック・クリアを入力する
         self.logger.info(f"{locator}にテキストを入力します。")
         #空っぽの箱を用意
-        element = None
         
         try:
-            element = self.driver.find_element(By.ID, locator)
+            element = self.get_element.get_id_element(locator)
             #クリックをして入力できるようにする
             element.click()
             #一旦、クリアする
@@ -119,11 +119,9 @@ class ActionElement:
     #クリックする
     def click_element(self, locator: str):
         self.logger.info(f"{locator}の要素をクリックします")
-        #空っぽの箱を用意
-        element = None
         
         try:
-            element = self.driver.find_element(By.ID, locator)
+            element = self.get_element.get_login_btn_element(locator)
             element.click()
             self.logger.info(f"クリックに成功しました")
         except Exception as e:
