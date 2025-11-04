@@ -32,92 +32,92 @@ class GetElement:
         self.driver = driver
         
     #IDを取得する
-    def get_element_by_ID(self, locator: str):
-        self.logger.info(f"ID='{locator}' で要素を取得します")
+    def get_element_by_ID(self, value: str):
+        self.logger.info(f"ID='{value}' で要素を取得します")
         try:
-            id_element = self.driver.find_element(By.ID, locator)
-            self.logger.info(f"ID='{locator}' の取得に成功しました")
+            id_element = self.driver.find_element(By.ID, value)
+            self.logger.info(f"ID='{value}' の取得に成功しました")
             return id_element
         except Exception as e:
-            self.logger.error(f"ID='{locator}'の取得に失敗しました\nエラー内容{e}")
+            self.logger.error(f"ID='{value}'の取得に失敗しました\nエラー内容{e}")
             #処理停止
             raise
         
     
     #NAMEを取得する
-    def get_element_by_name(self, locator: str):
-        self.logger.info(f"NAME='{locator}'で要素を取得します")
+    def get_element_by_name(self, value: str):
+        self.logger.info(f"NAME='{value}'で要素を取得します")
         try:
-            name_element = self.driver.find_element(By.NAME, locator)
-            self.logger.info(f"NAME='{locator}' の取得に成功しました")
+            name_element = self.driver.find_element(By.NAME, value)
+            self.logger.info(f"NAME='{value}' の取得に成功しました")
             return name_element
         except Exception as e:
-            self.logger.error(f"NAME='{locator}' の取得に失敗しました\nエラー内容{e}")
+            self.logger.error(f"NAME='{value}' の取得に失敗しました\nエラー内容{e}")
             #処理停止
             raise
         
         
     #XPATHで取得する
-    def get_element_by_xpath(self, locator: str):
-        self.logger.info(f"XPath='{locator}' で要素を取得します")
+    def get_element_by_xpath(self, value: str):
+        self.logger.info(f"XPath='{value}' で要素を取得します")
         try:
-            xpath_element = self.driver.find_element(By.XPATH, locator)
-            self.logger.info(f"XPath='{locator}' の取得に成功しました")
+            xpath_element = self.driver.find_element(By.XPATH, value)
+            self.logger.info(f"XPath='{value}' の取得に成功しました")
             return xpath_element
         except Exception as e:
-            self.logger.error(f"XPath='{locator}' 要素の取得に失敗しました\nエラー内容: {e}")
+            self.logger.error(f"XPath='{value}' 要素の取得に失敗しました\nエラー内容: {e}")
             #処理停止
             raise
         
         
     #CSS_SELECTORで取得
-    def get_element_by_css_selector(self, locator: str):
-        self.logger.info(f"CSS_SELECTOR='{locator}' で要素を取得します")
+    def get_element_by_css_selector(self, value: str):
+        self.logger.info(f"CSS_SELECTOR='{value}' で要素を取得します")
         try:
-            css_selector_element = self.driver.find_element(By.CSS_SELECTOR, locator)
-            self.logger.info(f"CSS_SELECTOR='{locator}' で取得に成功しました")
+            css_selector_element = self.driver.find_element(By.CSS_SELECTOR, value)
+            self.logger.info(f"CSS_SELECTOR='{value}' で取得に成功しました")
             return css_selector_element
         except Exception as e:
-            self.logger.error(f"CSS_SELECTOR='{locator}' で要素に失敗しました")
+            self.logger.error(f"CSS_SELECTOR='{value}' で要素に失敗しました\nエラー内容{e}")
             #処理停止
             raise
         
         
     #TAG_NAMEを取得する
-    def get_element_by_tag_name(self, locator: str):
-        self.logger.info(f"TAG_NAME='{locator}' で要素を取得します")
+    def get_element_by_tag_name(self, value: str):
+        self.logger.info(f"TAG_NAME='{value}' で要素を取得します")
         try:
-            tag_name_element = self.driver.find_element(By.TAG_NAME, locator)
-            self.logger.info(f"TAG_NAME='{locator}' で取得に成功しました")
+            tag_name_element = self.driver.find_element(By.TAG_NAME, value)
+            self.logger.info(f"TAG_NAME='{value}' で取得に成功しました")
             return tag_name_element
         except Exception as e:
-            self.logger.error(f"TAG_NAME='{locator}' で取得に失敗しました")
+            self.logger.error(f"TAG_NAME='{value}' で取得に失敗しました\nエラー内容{e}")
             #処理停止
             raise
     
     
     #LINK_TEXTを取得する
-    def get_by_link_text(self, locator: str):
-        self.logger.info(f"LINK_NAME='{locator}' で要素を取得します")
+    def get_element_by_link_text(self, value: str):
+        self.logger.info(f"LINK_TEXT='{value}' で要素を取得します")
         try:
-            link_text_element = self.driver.find_element(By.LINK_TEXT, locator)
-            self.logger.info(f"LINK_NAME='{locator}' で取得に成功しました")
+            link_text_element = self.driver.find_element(By.LINK_TEXT, value)
+            self.logger.info(f"LINK_TEXT='{value}' で取得に成功しました")
             return link_text_element
         except Exception as e:
-            self.logger.error(f"LINK_NAME='{locator}' で取得に失敗しました")
+            self.logger.error(f"LINK_TEXT='{value}' で取得に失敗しました\nエラー内容{e}")
             #処理停止
             raise
         
     
     #CLASS_NAMEを取得する
-    def get_element_by_class_name(self, locator: str):
-        self.logger.info(f"CLASS_NAME='{locator}' で要素を取得します")
+    def get_element_by_class_name(self, value: str):
+        self.logger.info(f"CLASS_NAME='{value}' で要素を取得します")
         try:
-            class_name_element = self.driver.find_element(By.CLASS_NAME, locator)
-            self.logger.info(f"CLASS_NAME='{locator}' で取得に成功しました")
+            class_name_element = self.driver.find_element(By.CLASS_NAME, value)
+            self.logger.info(f"CLASS_NAME='{value}' で取得に成功しました")
             return class_name_element
         except Exception as e:
-            self.logger.error(f"CLASS_NAME='{locator}' で取得に失敗しました")
+            self.logger.error(f"CLASS_NAME='{value}' で取得に失敗しました\nエラー内容{e}")
             #処理停止
             raise
         
@@ -132,40 +132,40 @@ class ActionElement:
         
     
     #click_clear_inputとclick_elementで取得する共通部分
-    def get_element(self, method_name: str, locator: str):
+    def get_element(self, get_method_name: str, value: str):
         self.logger.info("要素を取得します")
-        get_method = getattr(self.get_element_instance, method_name)
-        element =   get_method(locator)
+        find_method = getattr(self.get_element_instance, get_method_name)
+        element =   find_method(value)
         self.logger.info("要素を取得しました")
         return element
     
         
     #クリアをしてから入力する
-    def click_clear_input(self, method_name: str, locator: str, input_text: str):
+    def click_clear_input(self, get_method_name: str, value: str, input_text: str):
         self.logger.info("テキストを入力します。")
         try:
             #共通の呼び出す
-            element = self.get_element(method_name, locator)
+            element = self.get_element(get_method_name, value)
             #操作する部分
             element.click()
             element.clear()
             element.send_keys(input_text)
-            self.logger.info(f"{method_name}で取得した要素に '{input_text}' を入力しました")
+            self.logger.info(f"{get_method_name}で取得した要素に '{input_text}' を入力しました")
         except Exception as e:
-            self.logger.error("テキスト入力に失敗しました\ｎ{e}")
+            self.logger.error("テキスト入力に失敗しました\n{e}")
             #処理停止
             raise
         
         
     #クリックをする
-    def click_element(self, method_name: str, locator: str):
+    def click_element(self, get_method_name: str, value: str):
         self.logger.info("要素をクリックします")
         try:
             #共通の呼び出す
-            element = self.get_element(method_name, locator)
+            element = self.get_element(get_method_name, value)
             #操作する部分
             element.click()
-            self.logger.info(f"{method_name}で取得した要素をクリックしました")
+            self.logger.info(f"{get_method_name}で取得した要素をクリックしました")
         except Exception as e:
             self.logger.error(f"クリックに失敗しました\n{e}")
             #処理停止
