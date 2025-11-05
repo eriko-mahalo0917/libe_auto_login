@@ -32,7 +32,7 @@ class GetElement:
         self.driver = driver
         
     #IDを取得する
-    def get_element_by_ID(self, value: str):
+    def find_by_id(self, value: str):
         self.logger.info(f"ID='{value}' で要素を取得します")
         try:
             id_element = self.driver.find_element(By.ID, value)
@@ -45,7 +45,7 @@ class GetElement:
         
     
     #NAMEを取得する
-    def get_element_by_name(self, value: str):
+    def find_by_name(self, value: str):
         self.logger.info(f"NAME='{value}'で要素を取得します")
         try:
             name_element = self.driver.find_element(By.NAME, value)
@@ -58,7 +58,7 @@ class GetElement:
         
         
     #XPATHで取得する
-    def get_element_by_xpath(self, value: str):
+    def find_by_xpath(self, value: str):
         self.logger.info(f"XPath='{value}' で要素を取得します")
         try:
             xpath_element = self.driver.find_element(By.XPATH, value)
@@ -71,7 +71,7 @@ class GetElement:
         
         
     #CSS_SELECTORで取得
-    def get_element_by_css_selector(self, value: str):
+    def find_by_css_selector(self, value: str):
         self.logger.info(f"CSS_SELECTOR='{value}' で要素を取得します")
         try:
             css_selector_element = self.driver.find_element(By.CSS_SELECTOR, value)
@@ -84,7 +84,7 @@ class GetElement:
         
         
     #TAG_NAMEを取得する
-    def get_element_by_tag_name(self, value: str):
+    def find_by_tag_name(self, value: str):
         self.logger.info(f"TAG_NAME='{value}' で要素を取得します")
         try:
             tag_name_element = self.driver.find_element(By.TAG_NAME, value)
@@ -97,7 +97,7 @@ class GetElement:
     
     
     #LINK_TEXTを取得する
-    def get_element_by_link_text(self, value: str):
+    def find_by_link_text(self, value: str):
         self.logger.info(f"LINK_TEXT='{value}' で要素を取得します")
         try:
             link_text_element = self.driver.find_element(By.LINK_TEXT, value)
@@ -110,7 +110,7 @@ class GetElement:
         
     
     #CLASS_NAMEを取得する
-    def get_element_by_class_name(self, value: str):
+    def find_by_class_name(self, value: str):
         self.logger.info(f"CLASS_NAME='{value}' で要素を取得します")
         try:
             class_name_element = self.driver.find_element(By.CLASS_NAME, value)
@@ -152,7 +152,7 @@ class ActionElement:
             element.send_keys(input_text)
             self.logger.info(f"{get_method_name}で取得した要素に '{input_text}' を入力しました")
         except Exception as e:
-            self.logger.error("テキスト入力に失敗しました\n{e}")
+            self.logger.error(f"テキスト入力に失敗しました\n{e}")
             #処理停止
             raise
         
