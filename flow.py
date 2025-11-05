@@ -27,31 +27,56 @@ class AutoLoginFlow:
         
         
 #=====================================================================
-    def process(self, url: str,id_locator: str,pass_locator: str, login_btn_locator: str):
+    def process(self, url: str, 
+                id_method:str, id_value: str,               #IDを探すメソッド名とその値
+                pass_method:str, pass_value: str,           #PASSを探すメソッド名とその値
+                login_btn_method:str, login_btn_value: str  #Buttonを探すメソッド名とその値
+                ):
         
-        #1つ目のフロー
-        #ログインサイトを開く
-        self.chrome.get(url)
-        
-        #2つ目のフロー
-        #IDを入力する →　envファイルの"ID" という名前のデータを取り出してid_textへ代入
-        id_text = os.getenv("ID")
-        #ActionElementを呼び出す
-        self.action_element.click_clear_input(locator=id_locator, input_text=id_text)
-        
-        
-        #３つ目のフロー
-        #パスワードの入力
-        pass_text = os.getenv("PASS")
-        self.logger.info(f"パスワードを入力します：{pass_text}")
-        self.action_element.click_clear_input(locator=pass_locator, input_text=pass_text)
-        
-        
-        #４つ目のフロー
-        #ログインボタンをクリック
-        #ログインできているか確認
-        self.action_element.click_element(locator=login_btn_locator)
-        self.logger.info(f"ログインに成功しました")
-        
-        #終了
-        self.chrome.quit()
+        try:
+            #１つ目のフロー
+            #ログインサイトを開く
+            self.logger.info(f"URLを開きます：{url}")
+            self.chrome.get(url)
+            
+            
+            #2つ目のフロー
+            #IDを入力する
+            id_text = os.getenv("ID")
+            self.logger.info("IDを入力します")
+            self.action_element.click_clear_input(
+                get_method_name = id_method,   #メソッド名が入る
+                value = id_value,              #usernameなどの値が入る
+                input_text = id_text
+            )
+            
+            
+            #３つ目のフロー
+            #パスワード入力
+            pass_text = os.getenv("PASS")
+            self.logger.info("パスワードを入力します")
+            self.action_element.click_clear_input(
+                get_method_name = pass_method,   #メソッド名が入る
+                value = pass_value,              #passwordなどの値が入る
+                input_text = pass_text
+            )
+            
+            
+            #４つ目のフロー
+            #ログインボタンをクリックする
+            self.logger.info("ログインボタンをクリックします")
+            self.action_element.click_element(
+                get_method_name = login_btn_method,
+                value = login_btn_value,
+            )
+            
+            self.logger.info("ログインに成功しました")
+            
+        except Exception as e:
+            #要素が見つからないなどのエラーが起きたとき
+            self.logger.error(f"ログインフローにエラーが発生しました\n{e}")
+            
+        #処理終了だけど、成功しても失敗しても処理を終了するからfinally
+        finally:
+            self.logger.info("ブラウザを終了します")
+            self.chrome.quit()
