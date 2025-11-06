@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from logger import SimpleLogger
 from selenium_manager import ChromeDriverManager, GetElement, ActionElement
 
+import time
 
 load_dotenv()
 ##########################################################################
@@ -79,4 +80,5 @@ class AutoLoginFlow:
         #処理終了だけど、成功しても失敗しても処理を終了するからfinally
         finally:
             self.logger.info("ブラウザを終了します")
+            time.sleep(5)
             self.chrome.quit()
