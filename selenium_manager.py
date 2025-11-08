@@ -10,6 +10,24 @@ from selenium.webdriver.remote.webelement import WebElement
 from logger import SimpleLogger
 from chrome import ChromeManager
 
+#ランダムスリープのためにインポート
+import time
+import random #ランダムな数値を生成するライブラリ
+
+###########################################################################
+#ランダムスリープを追加
+class RandomSleeper:
+    #人間っぽくランダムに待機時間を持たせる
+    def __init__(self):
+        self.getLogger_set_up = SimpleLogger()
+        self.logger = self.getLogger_set_up.get_logger()
+        
+    def sleep_time(self, min_time: float = 1.0, max_time: float = 3.0):
+        #ランダムモジュールの関数
+        wait_time = random.uniform(min_time,max_time)
+        #import timeのメソッドで一時停止させる
+        time.sleep(wait_time)    
+
 ###########################################################################
 #１つ目のフロー
 # ブラウザを立ち上げる
@@ -129,6 +147,8 @@ class ActionElement:
         self.getLogger_set_up = SimpleLogger()
         self.logger = self.getLogger_set_up.get_logger()
         self.get_element_instance = get_element_instance
+        #random_sleeperのインスタンスを作成
+        self.random_sleeper = RandomSleeper()
         
     
     #click_clear_inputとclick_elementで取得する共通部分
@@ -146,10 +166,18 @@ class ActionElement:
         try:
             #共通の呼び出す
             element = self.get_element(get_method_name, value)
+            
+            #サイトを表示した後に待機時間
+            self.random_sleeper.sleep_time() #初期値のままで今回はやってみる
+            
             #操作する部分
             element.click()
             element.clear()
             element.send_keys(input_text)
+            
+            #入力後に待機時間を設置
+            self.random_sleeper.sleep_time() #初期値のままで今回はやってみる
+            
             self.logger.info(f"{get_method_name}で取得した要素に '{input_text}' を入力しました")
         except Exception as e:
             self.logger.error(f"テキスト入力に失敗しました\n{e}")
@@ -163,6 +191,10 @@ class ActionElement:
         try:
             #共通の呼び出す
             element = self.get_element(get_method_name, value)
+            
+            #クリックする前に待機時間を設置
+            self.random_sleeper.sleep_time() #初期値のままで今回はやってみる
+            
             #操作する部分
             element.click()
             self.logger.info(f"{get_method_name}で取得した要素をクリックしました")
